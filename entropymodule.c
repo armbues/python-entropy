@@ -28,17 +28,14 @@ shannon_entropy(PyObject *self, PyObject *args)
 	const char	*data;
 	float		 ent = 0, p;
 	size_t		 counts[256];
-	unsigned char	 c;
 	size_t		 n, i;
 
 	if (!PyArg_ParseTuple(args, "s#", &data, &n))
 		return (NULL);
 
 	memset(counts, '\0', sizeof(counts));
-	for (i = 0; i < n; i++) {
-		c = data[i];
-		counts[c] += 1;
-	}
+	for (i = 0; i < n; i++)
+		counts[(size_t)data[i]] += 1;
 
 	for (i = 0; i < 256; i++) {
 		if (!counts[i])
