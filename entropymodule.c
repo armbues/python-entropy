@@ -15,12 +15,32 @@ static PyMethodDef entropy_methods[] = {
 	{NULL, NULL, 0, NULL}
 };
 
+#if PY_MAJOR_VERSION >= 3
+static struct PyModuleDef	moduledef = {
+	PyModuleDef_HEAD_INIT,
+	"entropy",
+	NULL,
+	0,
+	entropy_methods,
+	NULL,
+	NULL,
+	NULL,
+	NULL
+};
 
+
+PyMODINIT_FUNC
+PyInit_entropy(void)
+{
+	return (PyModule_Create(&moduledef));
+}
+#else
 PyMODINIT_FUNC
 initentropy(void)
 {
 	Py_InitModule("entropy", entropy_methods);
 }
+#endif
 
 static PyObject *
 shannon_entropy(PyObject *self, PyObject *args)

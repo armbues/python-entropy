@@ -3,4 +3,5 @@ build/
 dist/
 entropy.egg-info/
 entropy.so
+entropy.*.so
 *.pyc
