@@ -33,10 +33,10 @@ shannon_entropy(PyObject *self, PyObject *args)
 	if (!PyArg_ParseTuple(args, "s#", &data, &n))
 		return (NULL);
 
-	if (!(counts = malloc(sizeof(*counts) * 256))) {
+	if (!(counts = malloc(sizeof(*counts) * 256)))
 		return (PyErr_NoMemory());
-	}
 	memset(counts, '\0', sizeof(*counts) * 256);
+
 	for (i = 0; i < n; i++)
 		counts[(unsigned char)data[i]] += 1;
 
