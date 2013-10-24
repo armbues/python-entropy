@@ -1,7 +1,7 @@
 #include <Python.h>
 
 #include <math.h>
-#include <stddef.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 
@@ -27,15 +27,18 @@ shannon_entropy(PyObject *self, PyObject *args)
 {
 	const char	*data;
 	float		 ent = 0, p;
-	size_t		 counts[256];
+	size_t		*counts;
 	size_t		 n, i;
 
 	if (!PyArg_ParseTuple(args, "s#", &data, &n))
 		return (NULL);
 
-	memset(counts, '\0', sizeof(counts));
+	if (!(counts = malloc(sizeof(*counts) * 256))) {
+		return (PyErr_NoMemory());
+	}
+	memset(counts, '\0', sizeof(*counts) * 256);
 	for (i = 0; i < n; i++)
-		counts[(size_t)data[i]] += 1;
+		counts[(unsigned char)data[i]] += 1;
 
 	for (i = 0; i < 256; i++) {
 		if (!counts[i])
@@ -43,5 +46,6 @@ shannon_entropy(PyObject *self, PyObject *args)
 		p = (float)counts[i] / n;
 		ent -= p * logf(p) / logf(256);
 	}
+	free(counts);
 	return (Py_BuildValue("f", ent));
 }
