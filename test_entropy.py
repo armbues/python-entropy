@@ -7,10 +7,10 @@ class TestShannonEntropy(object):
     def assert_entropy(self, data, expected):
         assert_almost_equal(shannon_entropy(data), expected, places=3)
 
-    def test_zero(self):
+    def test_0(self):
         self.assert_entropy('\x00' * 1024, 0.0)
 
-    def test_one(self):
+    def test_f(self):
         self.assert_entropy('\xff' * 1024, 0.0)
 
     def test_alternate_0f(self):
