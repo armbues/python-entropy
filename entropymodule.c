@@ -46,7 +46,7 @@ static PyObject *
 shannon_entropy(PyObject *self, PyObject *args)
 {
 	const char	*data;
-	float		 ent = 0, p;
+	double		 ent = 0, p;
 	size_t		*counts;
 	size_t		 n, i;
 
@@ -63,9 +63,11 @@ shannon_entropy(PyObject *self, PyObject *args)
 	for (i = 0; i < 256; i++) {
 		if (!counts[i])
 			continue;
-		p = (float)counts[i] / n;
-		ent -= p * logf(p) / logf(256);
+		p = (double)counts[i] / n;
+		ent -= p * logf(p);
 	}
 	free(counts);
-	return (Py_BuildValue("f", ent));
+
+	ent /= logf(256);
+	return (Py_BuildValue("d", ent));
 }
