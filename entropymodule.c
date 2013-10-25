@@ -53,7 +53,7 @@ shannon_entropy(PyObject *self, PyObject *args)
 	if (!PyArg_ParseTuple(args, "s#", &data, &n))
 		return (NULL);
 
-	if (!(counts = malloc(sizeof(*counts) * 256)))
+	if (!(counts = calloc(256, sizeof(*counts))))
 		return (PyErr_NoMemory());
 	memset(counts, '\0', sizeof(*counts) * 256);
 
