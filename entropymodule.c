@@ -8,10 +8,20 @@
 
 static PyObject	*shannon_entropy(PyObject *, PyObject *);
 
+PyDoc_STRVAR(module_doc,
+    "Fast entropy calculation.\n"
+    "\n"
+    "This module provides a method implemented in C for calculating the\n"
+    "shannon entropy of a byte string.");
+
+PyDoc_STRVAR(shannon_entropy_doc,
+    "shannon_entropy(bytes) -> float\n"
+    "\n"
+    "H(S) = - Sum(p_i * log(p_i))\n");
+
 
 static PyMethodDef entropy_methods[] = {
-	{"shannon_entropy",
-	    shannon_entropy, METH_VARARGS, "Calculate entropy of bytestring."},
+	{"shannon_entropy", shannon_entropy, METH_VARARGS, shannon_entropy_doc},
 	{NULL, NULL, 0, NULL}
 };
 
@@ -19,7 +29,7 @@ static PyMethodDef entropy_methods[] = {
 static struct PyModuleDef	moduledef = {
 	PyModuleDef_HEAD_INIT,
 	"entropy",
-	NULL,
+	module_doc,
 	0,
 	entropy_methods,
 	NULL,
@@ -38,7 +48,7 @@ PyInit_entropy(void)
 PyMODINIT_FUNC
 initentropy(void)
 {
-	Py_InitModule("entropy", entropy_methods);
+	Py_InitModule3("entropy", entropy_methods, module_doc);
 }
 #endif
 
