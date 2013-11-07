@@ -1,3 +1,4 @@
+#define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
 #include <math.h>
@@ -58,7 +59,8 @@ shannon_entropy(PyObject *self, PyObject *args)
 	const char	*data;
 	double		 ent = 0, p;
 	size_t		*counts;
-	size_t		 n, i;
+	Py_ssize_t	 n;
+	size_t		 i;
 
 	if (!PyArg_ParseTuple(args, "s#", &data, &n))
 		return (NULL);
