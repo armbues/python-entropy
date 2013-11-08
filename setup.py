@@ -10,7 +10,7 @@ entropymodule = Extension(
 
 setup(
     name='entropy',
-    version='0.7',
+    version='0.8',
     author='Martin Natano',
     author_email='natano@natano.net',
     description='extension module for calculating entropy fast',
@@ -29,6 +29,7 @@ setup(
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: Implementation :: CPython',
+        'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Utilities',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Development Status :: 3 - Alpha',
