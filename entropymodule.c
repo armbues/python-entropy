@@ -59,7 +59,11 @@ shannon_entropy(PyObject *self, PyObject *args)
 	const char	*data;
 	double		 ent = 0, p;
 	size_t		*counts;
+#ifdef PYPY_VERSION
+	int		 n;
+#else
 	Py_ssize_t	 n;
+#endif
 	size_t		 i;
 
 	if (!PyArg_ParseTuple(args, "s#", &data, &n))
