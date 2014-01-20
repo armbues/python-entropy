@@ -34,5 +34,4 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Development Status :: 3 - Alpha',
     ],
-    install_requires=['distribute'],
 )
