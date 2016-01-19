@@ -56,6 +56,7 @@ initentropy(void)
 static PyObject *
 shannon_entropy(PyObject *self, PyObject *args)
 {
+	Py_buffer *buf = (Py_buffer *) malloc(sizeof(*buf));
 	const char	*data;
 	double		 ent = 0, p;
 	size_t		*counts;
@@ -66,8 +67,11 @@ shannon_entropy(PyObject *self, PyObject *args)
 #endif
 	size_t		 i;
 
-	if (!PyArg_ParseTuple(args, "s#", &data, &n))
+	if (!PyArg_ParseTuple(args, "s*", buf))
 		return (NULL);
+	
+	data = buf->buf;
+	n = buf->len;
 
 	if (!(counts = calloc(256, sizeof(*counts))))
 		return (PyErr_NoMemory());
@@ -76,12 +80,16 @@ shannon_entropy(PyObject *self, PyObject *args)
 	for (i = 0; i < n; i++)
 		counts[(unsigned char)data[i]] += 1;
 
+	PyBuffer_Release(buf);
+	free(buf);
+
 	for (i = 0; i < 256; i++) {
 		if (!counts[i])
 			continue;
 		p = (double)counts[i] / n;
 		ent -= p * logf(p);
 	}
+
 	free(counts);
 
 	ent /= logf(256);
